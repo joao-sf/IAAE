@@ -1,0 +1,269 @@
+-- ============================================================
+-- IAAE — MEDIDAS POWER BI
+-- Tabelas esperadas:
+-- FatoCompras, FatoPrevisao, ResumoPrevisao,
+-- DimCalendario, DimMaterial, DimFornecedor,
+-- DimUASG, DimUnidade e DimCenario
+-- ============================================================
+
+-- =========================
+-- 1. AQUISIÇÕES HISTÓRICAS
+-- =========================
+
+Quantidade Adquirida =
+SUM ( FatoCompras[Quantidade] )
+
+Valor Total Observado =
+SUM ( FatoCompras[ValorTotal] )
+
+Preço Médio Ponderado =
+DIVIDE (
+    [Valor Total Observado],
+    [Quantidade Adquirida]
+)
+
+Preço Unitário Mediano =
+MEDIAN ( FatoCompras[ValorUnitario] )
+
+Observações de Compra =
+COUNTROWS ( FatoCompras )
+
+Compras Distintas =
+DISTINCTCOUNT ( FatoCompras[IdCompra] )
+
+CATMATs Observados =
+DISTINCTCOUNT ( FatoCompras[CodigoCATMAT] )
+
+Fornecedores Ativos =
+CALCULATE (
+    DISTINCTCOUNT ( FatoCompras[FornecedorKey] ),
+    FatoCompras[FornecedorKey] <> "FORNECEDOR_NAO_INFORMADO"
+)
+
+UASGs Ativas =
+CALCULATE (
+    DISTINCTCOUNT ( FatoCompras[UASGKey] ),
+    FatoCompras[UASGKey] <> "UASG_NAO_INFORMADA"
+)
+
+Ticket Médio por Observação =
+DIVIDE (
+    [Valor Total Observado],
+    [Observações de Compra]
+)
+
+-- =========================
+-- 2. QUALIDADE E ALERTAS
+-- =========================
+
+Registros com Erro =
+CALCULATE (
+    COUNTROWS ( FatoCompras ),
+    FatoCompras[DQPossuiErro] = TRUE ()
+)
+
+Taxa de Erro =
+DIVIDE (
+    [Registros com Erro],
+    [Observações de Compra]
+)
+
+Registros sem Unidade Comparável =
+CALCULATE (
+    COUNTROWS ( FatoCompras ),
+    CONTAINSSTRING (
+        FatoCompras[UnidadeKey],
+        "UNIDADE_NAO_INFORMADA"
+    )
+)
+
+Cobertura Unidade Comparável =
+1
+    - DIVIDE (
+        [Registros sem Unidade Comparável],
+        [Observações de Compra]
+    )
+
+Alertas de Preço =
+CALCULATE (
+    COUNTROWS ( FatoCompras ),
+    FatoCompras[AlertaPreco] = TRUE ()
+)
+
+Taxa de Alertas de Preço =
+DIVIDE (
+    [Alertas de Preço],
+    [Observações de Compra]
+)
+
+Itens com Histórico =
+CALCULATE (
+    COUNTROWS ( FatoCompras ),
+    FatoCompras[HistoricoItem] = TRUE ()
+)
+
+Duplicidades Reais =
+CALCULATE (
+    COUNTROWS ( FatoCompras ),
+    FatoCompras[DQDuplicado] = TRUE ()
+)
+
+-- =========================
+-- 3. CONCENTRAÇÃO
+-- =========================
+
+HHI Fornecedores =
+VAR TotalContexto =
+    CALCULATE (
+        [Valor Total Observado],
+        REMOVEFILTERS ( DimFornecedor )
+    )
+RETURN
+    SUMX (
+        VALUES ( DimFornecedor[FornecedorKey] ),
+        VAR Participacao =
+            DIVIDE (
+                CALCULATE ( [Valor Total Observado] ),
+                TotalContexto
+            )
+        RETURN
+            Participacao * Participacao
+    ) * 10000
+
+Participação Maior Fornecedor =
+VAR TotalContexto =
+    CALCULATE (
+        [Valor Total Observado],
+        REMOVEFILTERS ( DimFornecedor )
+    )
+RETURN
+    MAXX (
+        VALUES ( DimFornecedor[FornecedorKey] ),
+        DIVIDE (
+            CALCULATE ( [Valor Total Observado] ),
+            TotalContexto
+        )
+    )
+
+-- =========================
+-- 4. PREVISÃO
+-- =========================
+
+Quantidade Prevista =
+SUM ( FatoPrevisao[QuantidadePrevista] )
+
+Previsão Cenário Inferior =
+CALCULATE (
+    [Quantidade Prevista],
+    DimCenario[CenarioKey] = "INFERIOR"
+)
+
+Previsão Cenário Base =
+CALCULATE (
+    [Quantidade Prevista],
+    DimCenario[CenarioKey] = "BASE"
+)
+
+Previsão Cenário Superior =
+CALCULATE (
+    [Quantidade Prevista],
+    DimCenario[CenarioKey] = "SUPERIOR"
+)
+
+Amplitude da Previsão =
+[Previsão Cenário Superior]
+    - [Previsão Cenário Inferior]
+
+Amplitude Relativa da Previsão =
+DIVIDE (
+    [Amplitude da Previsão],
+    [Previsão Cenário Base]
+)
+
+Última Data Histórica =
+MAXX (
+    ALL ( FatoCompras ),
+    FatoCompras[Data]
+)
+
+Quantidade Últimos 12M =
+VAR DataFinal =
+    [Última Data Histórica]
+RETURN
+    CALCULATE (
+        [Quantidade Adquirida],
+        REMOVEFILTERS ( DimCalendario ),
+        DATESINPERIOD (
+            DimCalendario[Data],
+            DataFinal,
+            -12,
+            MONTH
+        )
+    )
+
+Variação Previsão Base vs Últimos 12M =
+DIVIDE (
+    [Previsão Cenário Base]
+        - [Quantidade Últimos 12M],
+    [Quantidade Últimos 12M]
+)
+
+CATMATs com Confiança Baixa =
+CALCULATE (
+    DISTINCTCOUNT (
+        ResumoPrevisao[CodigoCATMAT]
+    ),
+    ResumoPrevisao[ConfiancaPrevisao] = "BAIXA"
+)
+
+CATMATs com Confiança Média =
+CALCULATE (
+    DISTINCTCOUNT (
+        ResumoPrevisao[CodigoCATMAT]
+    ),
+    ResumoPrevisao[ConfiancaPrevisao] = "MEDIA"
+)
+
+CATMATs com Confiança Alta =
+CALCULATE (
+    DISTINCTCOUNT (
+        ResumoPrevisao[CodigoCATMAT]
+    ),
+    ResumoPrevisao[ConfiancaPrevisao] = "ALTA"
+)
+
+WAPE Médio por CATMAT =
+AVERAGEX (
+    VALUES ( DimMaterial[CodigoCATMAT] ),
+    CALCULATE (
+        MAX (
+            ResumoPrevisao[WAPEValidacaoPercentual]
+        )
+    )
+)
+
+-- =========================
+-- 5. PREÇO COMPARÁVEL
+-- =========================
+
+Preço Mediano Comparável =
+IF (
+    HASONEVALUE ( DimUnidade[UnidadeKey] ),
+    [Preço Unitário Mediano],
+    BLANK ()
+)
+
+Índice de Preço vs Mediana =
+DIVIDE (
+    [Preço Médio Ponderado],
+    [Preço Mediano Comparável]
+)
+
+-- =========================
+-- 6. FORMATAÇÃO RECOMENDADA
+-- =========================
+-- Quantidades: #,0.00
+-- Valores monetários: R$ #,0.00
+-- Percentuais: 0.0%
+-- HHI: #,0
+-- WAPE: 0.0

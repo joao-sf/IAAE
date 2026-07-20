@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and operating system
+.vs/
+.DS_Store
+Thumbs.db
+
+# Runtime outputs
+logs/*
+!logs/.gitkeep
+*.tmp
+*.bak
+~$*
+
+# Generated data
+*.duckdb
+*.db
+*.parquet
+*.psv
+
+data/*
+!data/README.md
+!data/sample/
+!data/sample/**
+!data/bronze/
+!data/bronze/.gitkeep
+!data/silver/
+!data/silver/.gitkeep
+!data/gold/
+!data/gold/.gitkeep
+!data/powerbi/
+!data/powerbi/.gitkeep
+
+# Power BI: publish only the final portfolio file
+*.pbix
+*.pbit
+!dashboard/IAAE_Dashboard_Final.pbix
+
+# Local archives, backups and intermediate packages
+*.zip
+backup*/
+backups*/
+modelo_powerbi_temp/

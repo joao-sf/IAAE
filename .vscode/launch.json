@@ -1,0 +1,56 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "IAAE: smoke-test da API",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\main.py",
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}\\.env",
+      "args": ["smoke-test", "--code", "610532"]
+    },
+    {
+      "name": "IAAE: price-smoke-test",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\main.py",
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}\\.env",
+      "args": [
+        "price-smoke-test",
+        "--code", "610539",
+        "--uasg", "986001",
+        "--page-size", "10"
+      ]
+    },
+    {
+      "name": "IAAE: carga piloto",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\main.py",
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}\\.env",
+      "args": [
+        "run",
+        "--start-date", "2025-01-01",
+        "--end-date", "2025-03-31",
+        "--max-materials", "3",
+        "--catalog-file", "config\\catmat_eletricos.csv"
+      ]
+    },
+    {
+      "name": "IAAE: reconstruir Gold",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\main.py",
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}\\.env",
+      "args": [
+        "rebuild",
+        "--catalog-file", "config\\catmat_eletricos.csv",
+        "--silver-file", "data\\silver\\precos_praticados.parquet"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+version: 1
+minimum_score: 2
+families:
+  cabos_condutores:
+    label: "Cabos e Condutores"
+    priority: 10
+    include:
+      - {term: "cabo eletrico", weight: 5}
+      - {term: "cabo de potencia", weight: 5}
+      - {term: "cabo multiplexado", weight: 5}
+      - {term: "cabo isolado", weight: 4}
+      - {term: "condutor eletrico", weight: 5}
+      - {term: "fio eletrico", weight: 4}
+      - {term: "cordoalha", weight: 3}
+      - {term: "barramento eletrico", weight: 4}
+      - {term: "cobre nu", weight: 4}
+      - {term: "aluminio nu", weight: 4}
+      - {term: "cabo", weight: 1}
+      - {term: "condutor", weight: 2}
+    exclude:
+      - "cabo usb"
+      - "cabo hdmi"
+      - "cabo de rede"
+      - "cabo rede"
+      - "cabo optico"
+      - "fibra optica"
+      - "cabo coaxial"
+      - "cabo telefonico"
+      - "cabo de audio"
+      - "cabo para impressora"
+      - "cabo de dados"
+      - "cabo sata"
+      - "cabo displayport"
+
+  transformadores:
+    label: "Transformadores"
+    priority: 20
+    include:
+      - {term: "transformador de distribuicao", weight: 6}
+      - {term: "transformador de potencia", weight: 6}
+      - {term: "transformador eletrico", weight: 5}
+      - {term: "transformador monofasico", weight: 5}
+      - {term: "transformador trifasico", weight: 5}
+      - {term: "transformador de corrente", weight: 4}
+      - {term: "transformador de potencial", weight: 4}
+      - {term: "transformador", weight: 2}
+    exclude:
+      - "transformador de audio"
+      - "transformador para brinquedo"
+      - "transformador eletronico para lampada"
+      - "fonte chaveada"
+      - "carregador"
+
+  medidores_energia:
+    label: "Medidores de Energia"
+    priority: 30
+    include:
+      - {term: "medidor de energia eletrica", weight: 7}
+      - {term: "medidor energia eletrica", weight: 7}
+      - {term: "medidor watt hora", weight: 6}
+      - {term: "medidor monofasico", weight: 5}
+      - {term: "medidor trifasico", weight: 5}
+      - {term: "medidor eletronico de energia", weight: 6}
+      - {term: "medidor eletrico", weight: 4}
+      - {term: "wattimetro", weight: 3}
+    exclude:
+      - "medidor de agua"
+      - "medidor agua"
+      - "medidor de gas"
+      - "medidor gas"
+      - "medidor de pressao"
+      - "medidor de distancia"
+      - "medidor de vazao"
+      - "medidor de umidade"
+      - "medidor de espessura"
+      - "medidor de temperatura"
+
+  disjuntores_chaves:
+    label: "Disjuntores e Chaves"
+    priority: 40
+    include:
+      - {term: "disjuntor", weight: 5}
+      - {term: "chave seccionadora", weight: 6}
+      - {term: "chave fusivel", weight: 6}
+      - {term: "chave de transferencia", weight: 5}
+      - {term: "religador", weight: 5}
+      - {term: "seccionador", weight: 4}
+      - {term: "interruptor de potencia", weight: 4}
+    exclude:
+      - "chave de fenda"
+      - "chave inglesa"
+      - "chave allen"
+      - "chave combinada"
+      - "chave soquete"
+      - "chave philips"
+      - "chave para veiculo"
+      - "chave criptografica"
+
+  isoladores:
+    label: "Isoladores"
+    priority: 50
+    include:
+      - {term: "isolador eletrico", weight: 6}
+      - {term: "isolador de porcelana", weight: 6}
+      - {term: "isolador polimerico", weight: 6}
+      - {term: "isolador de pino", weight: 5}
+      - {term: "isolador de suspensao", weight: 5}
+      - {term: "isolador roldana", weight: 5}
+      - {term: "isolador", weight: 2}
+    exclude:
+      - "isolador termico"
+      - "isolador acustico"
+      - "isolador de vibracao"
+      - "isolador hospitalar"
+      - "rolamento isolador"
+
+  conectores_ferragens:
+    label: "Conectores e Ferragens Elétricas"
+    priority: 60
+    include:
+      - {term: "conector eletrico", weight: 6}
+      - {term: "conector perfurante", weight: 6}
+      - {term: "conector cunha", weight: 5}
+      - {term: "terminal eletrico", weight: 5}
+      - {term: "grampo de ancoragem", weight: 6}
+      - {term: "grampo linha viva", weight: 6}
+      - {term: "alca preformada", weight: 5}
+      - {term: "cruzeta", weight: 3}
+      - {term: "ferragem para rede eletrica", weight: 6}
+      - {term: "ferragem eletrotecnica", weight: 5}
+    exclude:
+      - "conector usb"
+      - "conector hdmi"
+      - "conector de rede"
+      - "conector optico"
+      - "terminal rodoviario"
+      - "terminal de computador"
+      - "ferragem para movel"
+      - "ferragem para porta"

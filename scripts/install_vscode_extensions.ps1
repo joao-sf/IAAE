@@ -1,0 +1,17 @@
+$extensions = @(
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+    "charliermarsh.ruff",
+    "ms-toolsai.jupyter",
+    "ms-toolsai.datawrangler",
+    "redhat.vscode-yaml",
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    "mechatroner.rainbow-csv",
+    "chuckjonas.duckdb"
+)
+
+foreach ($extension in $extensions) {
+    code --install-extension $extension --force
+}

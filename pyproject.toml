@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iaae"
+version = "1.3.0"
+description = "Inteligência na Aquisição de Ativos Elétricos com dados públicos"
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+license = { file = "LICENSE" }
+authors = [
+  { name = "João da Silva Filho" }
+]
+keywords = [
+  "data-engineering",
+  "procurement-analytics",
+  "electric-assets",
+  "python",
+  "duckdb",
+  "power-bi",
+  "public-data",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.14",
+  "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+  "requests>=2.32,<3",
+  "pandas>=2.3.3,<3",
+  "pyarrow>=25,<26",
+  "duckdb>=1.4,<2",
+  "PyYAML>=6.0.3,<7",
+  "python-dateutil>=2.9,<3",
+  "python-dotenv>=1.1,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.4,<9",
+  "pytest-cov>=6,<8",
+  "ruff>=0.12,<1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+exclude = [
+  ".git",
+  ".venv",
+  "data",
+  "dashboard",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

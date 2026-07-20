@@ -1,0 +1,8 @@
+{
+  "folders": [
+    { "name": "IAAE", "path": "." }
+  ],
+  "settings": {
+    "workbench.editor.labelFormat": "short"
+  }
+}

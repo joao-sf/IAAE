@@ -1,0 +1,11 @@
+﻿codigo_catmat,status_modelagem,nivel_modelagem,unidade_modelagem,segmento_modelagem,metodo_rateio,justificativa
+422736,ATIVO,INDIVIDUAL,CATMAT_422736,Medição indireta digital,INDIVIDUAL,"Série individual com 5 anos, 26 meses ativos, 34 compras e ampla diversidade de fornecedores e UASGs"
+383951,ATIVO,SEGMENTO,SEG_MEDICAO_MASSA,Medição de massa,BLEND_QTD_50_COMPRAS_30_MESES_20,Série curta e concentrada; modelagem agregada com medidor monofásico
+383953,ATIVO,SEGMENTO,SEG_MEDICAO_MASSA,Medição de massa,BLEND_QTD_50_COMPRAS_30_MESES_20,Série curta e concentrada; modelagem agregada com medidor trifásico
+286852,ATIVO,SEGMENTO,SEG_LEGADO_ELETROMECANICO,Legado eletromecânico,BLEND_QTD_50_COMPRAS_30_MESES_20,Componente monofásico do segmento legado
+287355,ATIVO,SEGMENTO,SEG_LEGADO_ELETROMECANICO,Legado eletromecânico,BLEND_QTD_50_COMPRAS_30_MESES_20,Componente bifásico do segmento legado
+287357,ATIVO,SEGMENTO,SEG_LEGADO_ELETROMECANICO,Legado eletromecânico,BLEND_QTD_50_COMPRAS_30_MESES_20,Componente trifásico do segmento legado
+356362,ATIVO,SEGMENTO,SEG_LEGADO_ELETROMECANICO,Legado eletromecânico,BLEND_QTD_50_COMPRAS_30_MESES_20,Medidor polifásico eletromecânico incorporado ao segmento legado
+383952,EXCLUIDO,SEM_HISTORICO,,Medição de massa,NA,Sem registros disponíveis na API
+365598,EXCLUIDO,SEM_HISTORICO,,Medição avançada,NA,Sem registros disponíveis na API
+42838,EXCLUIDO,NAO_REPRESENTATIVO,,Medição especializada,NA,Medidor exclusivamente reativo; não representa medição de faturamento

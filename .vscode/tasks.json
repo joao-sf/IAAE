@@ -1,0 +1,98 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup: Python 3.14",
+      "type": "shell",
+      "command": "PowerShell",
+      "args": [
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}\\scripts\\setup_vscode.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Diagnóstico: ambiente",
+      "type": "shell",
+      "command": "PowerShell",
+      "args": [
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}\\scripts\\diagnostico_ambiente.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "QA: lint",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "ruff", "check", "."],
+      "group": "test",
+      "problemMatcher": ["$ruff"]
+    },
+    {
+      "label": "QA: formatação",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "ruff", "format", "--check", "."],
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "QA: testes com cobertura",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "pytest", "--cov=src", "--cov-report=term-missing"],
+      "group": {"kind": "test", "isDefault": true},
+      "problemMatcher": []
+    },
+    {
+      "label": "QA: repositório público",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["scripts\\validar_repositorio_publico.py"],
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "QA: completo",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "QA: lint",
+        "QA: formatação",
+        "QA: testes com cobertura",
+        "QA: repositório público"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "API: smoke-test",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["main.py", "smoke-test", "--code", "610532"],
+      "problemMatcher": []
+    },
+    {
+      "label": "API: price-smoke-test",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "main.py", "price-smoke-test",
+        "--code", "610539",
+        "--uasg", "986001",
+        "--page-size", "10"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Pipeline: reconstruir Gold",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "main.py", "rebuild",
+        "--catalog-file", "config\\catmat_eletricos.csv",
+        "--silver-file", "data\\silver\\precos_praticados.parquet"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

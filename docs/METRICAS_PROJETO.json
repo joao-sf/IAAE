@@ -1,0 +1,30 @@
+{
+  "periodo_historico": {
+    "inicio": "2021-01-01",
+    "fim": "2025-12-31"
+  },
+  "previsao_ano": 2026,
+  "familias": 4,
+  "catmats": 15,
+  "registros_compras": 2322,
+  "quantidade_observada": 1961258.0,
+  "valor_observado_brl": 33133075.4141,
+  "fornecedores": 768,
+  "uasgs": 719,
+  "ufs": 27,
+  "erros_qualidade": 45,
+  "duplicidades_confirmadas": 0,
+  "alertas_preco": 227,
+  "unidades_comparaveis": 33,
+  "linhas_previsao": 540,
+  "cenarios": [
+    "BASE",
+    "INFERIOR",
+    "SUPERIOR"
+  ],
+  "previsao_total": {
+    "base": 193789.265319,
+    "inferior": 13949.109936,
+    "superior": 417029.40172
+  }
+}
