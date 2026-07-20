@@ -1,0 +1,16 @@
+name: Actions diagnostic
+
+"on":
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Runner probe
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Confirm runner startup
+        run: echo "GitHub-hosted runner started successfully"
