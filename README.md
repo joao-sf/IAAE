@@ -78,7 +78,7 @@ O PBIX contém um snapshot importado. Para atualizar os dados em outro computado
 ### Windows / PowerShell
 
 ```powershell
-git clone https://github.com/SEU_USUARIO/IAAE.git
+git clone https://github.com/joao-sf/IAAE.git
 cd IAAE
 Set-ExecutionPolicy -Scope Process Bypass
 .\scripts\setup_vscode.ps1
